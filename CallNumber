@@ -1,0 +1,28 @@
+__author__ = 'ZrongH'
+#!/usr/bin/python
+# coding:utf-8
+import time
+import selenium.webdriver
+
+
+def CallNumber(number):
+    chromeDriver = r"chromedriver"
+    while True:
+        driver = selenium.webdriver.Chrome(chromeDriver)
+        #使用chromeDriver打开网页
+        driver.get('https://www.10086china.com/index.html')
+        driver.set_window_size(1440, 900)
+        setValue = r'document.getElementById("dial_input").value="' + number + '"'
+        driver.execute_script(setValue)
+        callBtn = driver.find_element_by_id('callbtn')
+        driver.save_screenshot('screenBeforeCall.png')
+        callBtn.click()
+        time.sleep(10)
+        driver.save_screenshot('screenAfterCall.png')
+        time.sleep(600) #十分钟后再打
+        driver.quit()
+
+
+if __name__ == '__main__':
+    number = "************" #要骚扰的人的号码
+    CallNumber(number)
